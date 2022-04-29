@@ -59,7 +59,7 @@ body {
   height: 12px;
   width: 16px;
   content: "";
-  background: url("./dropdown.png");
+  background: url("./image/dropdown.png");
 }
 .dropdown-chart-1,
 .dropdown-chart-2 {

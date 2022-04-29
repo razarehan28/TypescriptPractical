@@ -1,12 +1,13 @@
 "use strict";
 //selecting various elements
 let btns = document.querySelectorAll(".btn");
+console.log(typeof btns);
 let number = document.querySelectorAll(".number");
 const deg = document.querySelector("#degree");
-let functionButton = document.querySelector(".function-btn");
+let functionButton = (document.querySelector(".function-btn"));
 const operator = document.querySelectorAll(".operator");
 const equal = document.querySelector("#equal");
-let trigoButton = document.querySelector(".trigonometry-function");
+let trigoButton = (document.querySelector(".trigonometry-function"));
 let second = document.querySelector("#secondBtn");
 let calScreen = document.querySelector(".calculator-screen");
 const backspace = document.querySelector("#backspace");
@@ -46,6 +47,9 @@ function eventList(e) {
             if (calScreen.innerHTML.includes("^")) {
                 let result = nthroot(calScreen.innerHTML);
                 calScreen.innerHTML = String(result);
+            }
+            else if (calScreen.innerHTML.includes("%")) {
+                calScreen.innerHTML = String(mod(calScreen.innerHTML));
             }
             else {
                 calScreen.innerHTML = String(evaluate(calScreen.innerHTML));
@@ -127,6 +131,9 @@ function eventList(e) {
             break;
         case "denom":
             calScreen.innerHTML = String(1 / parseInt(calScreen.innerHTML));
+            break;
+        case "mod":
+            calScreen.innerHTML += "%";
             break;
         case "root":
             calScreen.innerHTML = String(Math.sqrt(parseInt(calScreen.innerHTML)));
@@ -253,13 +260,14 @@ function memoryClear() {
 function memoryRecall() {
     return memory.pop().toString();
 }
-// function mod(num) {
-//   let a, b, result;
-//   a = parseFloat(num.slice(0, num.indexOf("%")));
-//   b = parseFloat(num.slice(num.indexOf("%") + 1));
-//   result = a % b;
-//   return result;
-// }
+function mod(num) {
+    let a, b, result;
+    a = parseInt(num.slice(0, num.indexOf("%")));
+    b = parseInt(num.slice(num.indexOf("%") + 1));
+    result = a % b;
+    console.log(a, b, result);
+    return result;
+}
 function backSpace(value) {
     return value.substring(0, value.length - 1);
 }
@@ -376,8 +384,8 @@ function evaluate(str) {
     function add(arr) {
         let index = findAdditionIndex(arr);
         arr[index] =
-            parseInt(convertToString(arr[index - 1])) +
-                parseInt(convertToString(arr[index + 1]));
+            parseInt(convertToString(arr[+index - 1])) +
+                parseInt(convertToString(arr[+index + 1]));
         return arr.filter((c, i) => {
             return i !== +index - 1 && i !== +index + 1;
         });

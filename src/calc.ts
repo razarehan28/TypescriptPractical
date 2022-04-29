@@ -1,15 +1,21 @@
 //selecting various elements
-let btns = document.querySelectorAll(".btn");
-let number = document.querySelectorAll(".number");
+let btns: NodeList = document.querySelectorAll(".btn");
+let number = document.querySelectorAll(".number") as NodeListOf<HTMLDivElement>;
 const deg = <HTMLElement>document.querySelector("#degree");
-let functionButton = <HTMLElement>document.querySelector(".function-btn");
-const operator = document.querySelectorAll(".operator");
-const equal = document.querySelector("#equal");
-let trigoButton = <HTMLElement>document.querySelector(".trigonometry-function");
+let functionButton: HTMLElement = <HTMLInputElement>(
+  document.querySelector(".function-btn")
+);
+const operator = document.querySelectorAll(
+  ".operator"
+) as NodeListOf<HTMLDivElement>;
+const equal: HTMLElement = document.querySelector("#equal");
+let trigoButton: HTMLElement = <HTMLElement>(
+  document.querySelector(".trigonometry-function")
+);
 let second = <HTMLElement>document.querySelector("#secondBtn");
-let calScreen = <HTMLElement>document.querySelector(".calculator-screen");
-const backspace = document.querySelector("#backspace");
-let clear = <HTMLElement>document.querySelector("#clear");
+let calScreen = document.querySelector(".calculator-screen") as HTMLElement;
+const backspace: HTMLElement = document.querySelector("#backspace");
+let clear: HTMLElement = <HTMLElement>document.querySelector("#clear");
 //initialize the screen value
 let memory: String[] = [];
 let i: number = 0;
@@ -43,6 +49,8 @@ function eventList(e: Event) {
       if (calScreen.innerHTML.includes("^")) {
         let result = nthroot(calScreen.innerHTML);
         calScreen.innerHTML = String(result);
+      } else if (calScreen.innerHTML.includes("%")) {
+        calScreen.innerHTML = String(mod(calScreen.innerHTML));
       } else {
         calScreen.innerHTML = String(evaluate(calScreen.innerHTML));
       }
@@ -121,7 +129,6 @@ function eventList(e: Event) {
     case "exponential":
       if (calScreen.innerHTML === "") {
         calScreen.innerHTML = "2.718";
-        console.log(calScreen.innerHTML);
       } else {
         calScreen.innerHTML = String(Math.E);
       }
@@ -131,6 +138,9 @@ function eventList(e: Event) {
       break;
     case "denom":
       calScreen.innerHTML = String(1 / parseInt(calScreen.innerHTML));
+      break;
+    case "mod":
+      calScreen.innerHTML += "%";
       break;
     case "root":
       calScreen.innerHTML = String(Math.sqrt(parseInt(calScreen.innerHTML)));
@@ -221,7 +231,7 @@ function eventList(e: Event) {
   }
 }
 // Memory Function
-function memoryPlus(num: string) {
+function memoryPlus(num: string): number {
   if (memory.length === 0) {
     memory.push(num);
     calScreen.innerHTML = "";
@@ -263,14 +273,14 @@ function memoryClear() {
 function memoryRecall() {
   return memory.pop().toString();
 }
-// function mod(num) {
-//   let a, b, result;
-//   a = parseFloat(num.slice(0, num.indexOf("%")));
-//   b = parseFloat(num.slice(num.indexOf("%") + 1));
-//   result = a % b;
-//   return result;
-// }
-function backSpace(value: string) {
+function mod(num: string): number {
+  let a, b, result;
+  a = parseInt(num.slice(0, num.indexOf("%")));
+  b = parseInt(num.slice(num.indexOf("%") + 1));
+  result = a % b;
+  return result;
+}
+function backSpace(value: string): string {
   return value.substring(0, value.length - 1);
 }
 //deg and rad function
@@ -311,7 +321,7 @@ operator.forEach((operator) => {
   });
 });
 //function of root
-function nthroot(num: string) {
+function nthroot(num: string): number {
   let a;
   let b;
   let operand1 = num.slice(0, num.indexOf("^"));
@@ -329,12 +339,11 @@ function pow(num: string): number {
   let a, b;
   a = parseInt(num.slice(0, num.indexOf("^")));
   b = parseInt(num.slice(num.indexOf("^") + 1));
-  console.log(a, b);
   return Math.pow(a, b);
 }
 //dropdown menu
-function toggle(e: Event) {
-  let target = <HTMLElement>e.target;
+function toggle(e: Event): void {
+  let target: HTMLElement = <HTMLElement>e.target;
   if (!target.nextElementSibling.classList.contains("show")) {
     target.nextElementSibling.classList.add("show");
   } else {
@@ -349,7 +358,7 @@ function changeSign(number: string | number): number {
   return number;
 }
 type stringOrNumber = string | number;
-function convertToString(val: stringOrNumber) {
+function convertToString(val: stringOrNumber): string {
   return val.toString();
 }
 //equal function
@@ -384,8 +393,8 @@ function evaluate(str: string): stringOrNumber[] {
   function add(arr: stringOrNumber[]) {
     let index: stringOrNumber = findAdditionIndex(arr);
     arr[index] =
-      parseInt(convertToString(arr[index - 1])) +
-      parseInt(convertToString(arr[index + 1]));
+      parseInt(convertToString(arr[+index - 1])) +
+      parseInt(convertToString(arr[+index + 1]));
 
     return arr.filter((c: stringOrNumber, i: stringOrNumber) => {
       return i !== +index - 1 && i !== +index + 1;
@@ -418,10 +427,10 @@ function evaluate(str: string): stringOrNumber[] {
       return i !== +index - 1 && i !== +index + 1;
     });
   }
-  function containsAdditionOrSubtract(arr: stringOrNumber[]) {
+  function containsAdditionOrSubtract(arr: stringOrNumber[]): boolean {
     return arr.some((i) => i === "+" || i === "-");
   }
-  function containsMultiplyOrDivide(arr: stringOrNumber[]) {
+  function containsMultiplyOrDivide(arr: stringOrNumber[]): boolean {
     return arr.some((i) => i === "*" || i === "/");
   }
   function simplify(arr: stringOrNumber[]): stringOrNumber[] {
