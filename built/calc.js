@@ -1,7 +1,6 @@
 "use strict";
 //selecting various elements
 let btns = document.querySelectorAll(".btn");
-console.log(typeof btns);
 let number = document.querySelectorAll(".number");
 const deg = document.querySelector("#degree");
 let functionButton = (document.querySelector(".function-btn"));
@@ -120,7 +119,6 @@ function eventList(e) {
         case "exponential":
             if (calScreen.innerHTML === "") {
                 calScreen.innerHTML = "2.718";
-                console.log(calScreen.innerHTML);
             }
             else {
                 calScreen.innerHTML = String(Math.E);
@@ -172,16 +170,16 @@ function eventList(e) {
         case "factorial":
             calScreen.innerHTML = String(factorialFunc(parseInt(calScreen.innerHTML)));
             break;
-        case "memory-recall":
+        case "memoryRecall":
             calScreen.innerHTML = memoryRecall();
             break;
-        case "memory-clear":
+        case "memoryClear":
             memoryClear();
             break;
-        case "memory-plus":
+        case "memoryPlus":
             memoryPlus(calScreen.innerHTML);
             break;
-        case "memory-minus":
+        case "memoryMinus":
             memoryMinus();
             break;
         case "pow3":
@@ -265,7 +263,6 @@ function mod(num) {
     a = parseInt(num.slice(0, num.indexOf("%")));
     b = parseInt(num.slice(num.indexOf("%") + 1));
     result = a % b;
-    console.log(a, b, result);
     return result;
 }
 function backSpace(value) {
@@ -329,7 +326,6 @@ function pow(num) {
     let a, b;
     a = parseInt(num.slice(0, num.indexOf("^")));
     b = parseInt(num.slice(num.indexOf("^") + 1));
-    console.log(a, b);
     return Math.pow(a, b);
 }
 //dropdown menu

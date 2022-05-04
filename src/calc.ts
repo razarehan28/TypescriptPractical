@@ -42,8 +42,8 @@ second.addEventListener("click", function () {
   }
 });
 function eventList(e: Event) {
-  let ch = e.target as HTMLElement;
-  let chId = ch.id;
+  let char = e.target as HTMLElement;
+  let chId = char.id;
   switch (chId) {
     case "equal":
       if (calScreen.innerHTML.includes("^")) {
@@ -179,16 +179,16 @@ function eventList(e: Event) {
         factorialFunc(parseInt(calScreen.innerHTML))
       );
       break;
-    case "memory-recall":
+    case "memoryRecall":
       calScreen.innerHTML = memoryRecall();
       break;
-    case "memory-clear":
+    case "memoryClear":
       memoryClear();
       break;
-    case "memory-plus":
+    case "memoryPlus":
       memoryPlus(calScreen.innerHTML);
       break;
-    case "memory-minus":
+    case "memoryMinus":
       memoryMinus();
       break;
     case "pow3":
@@ -244,7 +244,7 @@ function memoryPlus(num: string): number {
     return memory1;
   }
 }
-function memoryMinus() {
+function memoryMinus(): String[] {
   if (memory.length === 0) {
     alert("Nothing is in the memeory");
   } else {
@@ -252,7 +252,7 @@ function memoryMinus() {
   }
   return memory;
 }
-function memoryStored() {
+function memoryStored():String[] {
   if (memory.length === 0) {
     alert("nothing is stored");
   } else {
@@ -264,7 +264,7 @@ function memoryStored() {
   }
   return memory;
 }
-function memoryClear() {
+function memoryClear():String[] {
   for (let i = 0; i <= memory.length; i++) {
     memory.pop();
   }
